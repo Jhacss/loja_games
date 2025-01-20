@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-//import { Categoria } from '../../Categoria/entities/categoria.entity';
+import { Categoria } from '../../categoria/entities/categoria.entity';
 
 @Entity({ name: 'tb_produtos' }) //CREATE TABLE tb_postagens()
 export class Produto {
@@ -25,6 +25,11 @@ export class Produto {
   @Column({ length: 1000, nullable: false }) //VARCHAR (1000) NOT NULL
   descricao: string;
 
+  @Transform(({ value }: TransformFnParams) => value?.trim())
+  @IsNotEmpty() //Validção dos dados do obeto
+  @Column({ length: 1000, nullable: false }) //VARCHAR (1000) NOT NULL
+  foto: string;
+
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
@@ -36,8 +41,10 @@ export class Produto {
   data_lancamento: Date;
     categoria: any;
 
-  //@ManyToOne(() => Categoria, (categoria) => categoria.produto, {
-   // onDelete: 'CASCADE',
-  //})
-  //categoria: Categoria;
+  @ManyToOne(() => Categoria, (categoria) => categoria.produto, {
+  onDelete: 'CASCADE',
+})
+  categorias: Categoria;
+
 }
+
