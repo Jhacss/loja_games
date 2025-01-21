@@ -16,6 +16,7 @@ export class ProdutoService {
     return this.produtoRepository.find({
       relations: {
         categoria: true,
+        usuario: true
       },
     }); //SELECT * FROM TB_postagens;
   }
@@ -28,6 +29,7 @@ export class ProdutoService {
       },
       relations: {
         categoria: true,
+        usuario: true
       },
     });
 
@@ -44,6 +46,7 @@ export class ProdutoService {
       },
       relations: {
         categoria: true,
+        usuario: true
       },
     });
   }

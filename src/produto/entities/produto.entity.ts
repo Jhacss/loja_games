@@ -6,8 +6,11 @@ import {
   Column,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Categoria } from '../../categoria/entities/categoria.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
+import { NumericTransformer } from '../../util/numerictransformer';
 
 @Entity({ name: 'tb_produtos' }) //CREATE TABLE tb_postagens()
 export class Produto {
@@ -33,7 +36,7 @@ export class Produto {
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false }) // DECIMAL(10, 2) NOT NULL
+  @Column({ type: 'decimal', precision: 10, scale: 2,  transformer: new NumericTransformer() }) // DECIMAL(10, 2) NOT NULL
   preco: number; // Preço do jogo
 
 
@@ -42,9 +45,14 @@ export class Produto {
 
 
   @ManyToOne(() => Categoria, (categoria) => categoria.produto, {
-  onDelete: 'CASCADE',
+  onDelete: 'CASCADE'
+  
 })
   categoria: Categoria;
+  
+  @ManyToOne(() => Usuario, (usuario) => usuario.produto, {
+    onDelete: 'CASCADE',
+})
+usuario: Usuario
 
 }
-
