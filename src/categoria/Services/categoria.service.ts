@@ -12,11 +12,11 @@ export class CategoriaService{
     ){}
 
     async findAll(): Promise<Categoria[]>{
-        return this.categoriaRepository.find({
-            relations:{
-                produto: true
-            }
-        }); //SELECT * FROM TB_postagens;
+        return this.categoriaRepository.find()
+           // relations:{
+            //    produto: true
+            //}
+        ; //SELECT * FROM TB_postagens;
     }
 
     async findByid(id: number): Promise<Categoria>{

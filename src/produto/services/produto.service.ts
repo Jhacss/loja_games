@@ -2,21 +2,21 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Produto } from '../entities/produto.entity';
 import { DeleteResult, ILike, Repository } from 'typeorm';
-//import { CategoriaService } from '../../categoria/services/categoria.service';
+import { CategoriaService } from '../../categoria/services/categoria.service';
 
 @Injectable()
 export class ProdutoService {
   constructor(
     @InjectRepository(Produto)
     private produtoRepository: Repository<Produto>,
-    //private categoriaService: CategoriaService,
+    private categoriaService: CategoriaService,
   ) {}
 
   async findAll(): Promise<Produto[]> {
     return this.produtoRepository.find({
-     // relations: {
-      //  categoria: true,
-     // },
+      relations: {
+        categoria: true,
+      },
     }); //SELECT * FROM TB_postagens;
   }
 
@@ -26,9 +26,9 @@ export class ProdutoService {
       where: {
         id,
       },
-      //relations: {
-      //  categoria: true,
-    //  },
+      relations: {
+        categoria: true,
+      },
     });
 
     if (!produto)
@@ -42,14 +42,14 @@ export class ProdutoService {
       where: {
         nome: ILike(`%${nome}%`),
       },
-      //relations: {
-       // categoria: true,
-      //},
+      relations: {
+        categoria: true,
+      },
     });
   }
 
   async create(produto: Produto): Promise<Produto> {
-    //await this.categoriaService.findByid(produto.categoria.id);
+    await this.categoriaService.findByid(produto.categoria.id);
 
     //INSERT INTO tb_postagens (titulo, texto) VALUES(?, ?)
     return await this.produtoRepository.save(produto);
@@ -58,7 +58,7 @@ export class ProdutoService {
   async update(produto: Produto): Promise<Produto> {
     await this.findByid(produto.id);
 
-   // await this.categoriaService.findByid(produto.categoria.id);
+    await this.categoriaService.findByid(produto.categoria.id);
     //UPDATE tb_postagens SET titulo = produto.titulo,
     // texto = produto.texto, data = CURRENT_TINESTAMP()
     //  WHERE id = produto.id

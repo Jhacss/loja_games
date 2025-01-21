@@ -37,14 +37,14 @@ export class Produto {
   preco: number; // Preço do jogo
 
 
-  @UpdateDateColumn()
+  @Column()
   data_lancamento: Date;
-    categoria: any;
+
 
   @ManyToOne(() => Categoria, (categoria) => categoria.produto, {
   onDelete: 'CASCADE',
 })
-  categorias: Categoria;
+  categoria: Categoria;
 
 }
 

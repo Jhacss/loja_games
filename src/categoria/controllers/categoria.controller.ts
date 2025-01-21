@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { CategoriaService } from "../services/categoria.service";
 import { Categoria } from "../entities/categoria.entity";
 
-@Controller("/produtos")
+@Controller("/categorias")
 export class CategoriaController{
 
     constructor(
@@ -35,7 +35,7 @@ export class CategoriaController{
 
     }
 
-    @Put()
+    @Put('/atualizar')
     @HttpCode(HttpStatus.OK)
     update(@Body() categoria: Categoria): Promise<Categoria>{
         return this.categoriaService.update(categoria);
