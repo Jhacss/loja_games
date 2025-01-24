@@ -11,6 +11,7 @@ import { Transform, TransformFnParams, Type } from 'class-transformer';
 
 @Entity({ name: 'tb_usuarios' })
 export class Usuario {
+ 
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,7 +19,7 @@ export class Usuario {
   @Column({ length: 255, nullable: false })
   nome: string;
 
-  @IsEmail()
+ 
   @IsNotEmpty()
   @Column({ length: 255, nullable: false })
   usuario: string;
